@@ -127,4 +127,16 @@ function closeModalByEscape(event) {
   } }
   
 //Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
-
+//Lazy
+// const images = document.querySelectorAll('.gallery__image');
+// const lLoad = new IntersectionObserver((images, observer) => {
+//   console.log('counter')
+//   images.forEach(img => {
+//     if (img.isIntersecting) {
+//       const image = img.target;
+//       const src = image.dataset.source;
+//       image.src = src;
+//     }
+//   })
+// })
+// images.forEach(image => lLoad.observe(image));
