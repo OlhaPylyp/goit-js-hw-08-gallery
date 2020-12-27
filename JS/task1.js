@@ -1,12 +1,12 @@
 
 const imageArray = [
-  {
-    preview:
-      'https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825__340.jpg',
-    original:
-      'https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825_1280.jpg',
-    description: 'Hokkaido Flower',
-  },
+  // {
+  //   preview:
+  //     'https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825__340.jpg',
+  //   original:
+  //     'https://cdn.pixabay.com/photo/2019/05/14/16/43/himilayan-blue-poppy-4202825_1280.jpg',
+  //   description: 'Hokkaido Flower',
+  // },
   {
     preview:
       'https://cdn.pixabay.com/photo/2019/05/14/22/05/container-4203677__340.jpg',
@@ -67,10 +67,9 @@ const imageArray = [
 
 const listGallery = document.querySelector('.js-gallery');
 const backdropRef = document.querySelector('.js-lightbox');
-const overlayRef = backdropRef.querySelector('.lightbox__overlay');
+const overlayRef = document.querySelector('.lightbox__overlay');
 const modalImage= document.querySelector('.lightbox__image');
 const modalClose = document.querySelector('button[data-action="close-lightbox"]');
-// modalClose.addEventListener('click', () => document.body.classList.remove('lightbox'));
 const addGalleryLayout= imageArray.map((elem)=> {
     const elemItem = document.createElement('li');
     elemItem.classList.add('gallery__item');
@@ -82,7 +81,7 @@ const addGalleryLayout= imageArray.map((elem)=> {
   image.setAttribute('src', elem.preview);
   image.setAttribute('alt', elem.description);
   image.setAttribute('data-source', elem.original);
-  // image.dataset.index = images.indexOf(elem);
+//  image.dataset.index = images.indexOf(elem);
     elemItem.appendChild(link);
     link.appendChild(image);
     return elemItem;
@@ -92,18 +91,23 @@ listGallery.append(...addGalleryLayout);
  listGallery.addEventListener("click", onImageClick);
  function onImageClick (event)  { 
   event.preventDefault();
-  
+
+   console.log(0)
    if (event.target.nodeName !== "IMG") {
      console.log('enter')
-  return     
+     return;    
   }
-   openModal(event);
+   getUrl(event);
+   openModal();
  
 }
-function openModal(event) {
-  modalImage.src = event.target.dataset.source;
-  modalImage.alt = event.target.alt;
-  backdropRef.classList.add('is-open');
+function getUrl(url) {
+  modalImage.src = url.target.dataset.source;
+  modalImage.alt = url.target.alt;
+ 
+}
+function openModal() {
+ backdropRef.classList.add('is-open'); 
 }
 function clearModal() {
     backdropRef.classList.remove('is-open')
@@ -115,4 +119,12 @@ function onBackdropClick(event) {
   if (event.target === overlayRef ) { clearModal()
   }
 };
-overlayRef.addEventListener('click',  onBackdropClick) 
+overlayRef.addEventListener('click', onBackdropClick);
+
+
+window.addEventListener('keydown',closeModalByEscape)
+function closeModalByEscape(event) { 
+  if (event.code === 'Escape') {clearModal()
+  } }
+  
+
