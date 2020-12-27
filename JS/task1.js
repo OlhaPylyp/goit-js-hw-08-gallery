@@ -70,6 +70,7 @@ const backdropRef = document.querySelector('.js-lightbox');
 const overlayRef = document.querySelector('.lightbox__overlay');
 const modalImage= document.querySelector('.lightbox__image');
 const modalClose = document.querySelector('button[data-action="close-lightbox"]');
+
 const addGalleryLayout= imageArray.map((elem)=> {
     const elemItem = document.createElement('li');
     elemItem.classList.add('gallery__item');
@@ -86,34 +87,32 @@ const addGalleryLayout= imageArray.map((elem)=> {
     link.appendChild(image);
     return elemItem;
  })
-
 listGallery.append(...addGalleryLayout);
- listGallery.addEventListener("click", onImageClick);
+
+
+listGallery.addEventListener("click", onImageClick);
  function onImageClick (event)  { 
   event.preventDefault();
-
-   console.log(0)
    if (event.target.nodeName !== "IMG") {
      console.log('enter')
      return;    
   }
-   getUrl(event);
+   setUrl(event);
    openModal();
- 
 }
-function getUrl(url) {
+function setUrl(url) {
   modalImage.src = url.target.dataset.source;
-  modalImage.alt = url.target.alt;
- 
+  modalImage.alt = url.target.alt; 
 }
 function openModal() {
  backdropRef.classList.add('is-open'); 
 }
 function clearModal() {
-    backdropRef.classList.remove('is-open')
-    modalImage.src = "";
-    modalImage.alt = ""
-  };
+  backdropRef.classList.remove('is-open')
+  modalImage.src = "";
+  modalImage.alt = ""
+};
+  // Закрытие модального окна по нажатии на бекдроп
 modalClose.addEventListener('click', clearModal) 
 function onBackdropClick(event) {
   if (event.target === overlayRef ) { clearModal()
@@ -121,10 +120,11 @@ function onBackdropClick(event) {
 };
 overlayRef.addEventListener('click', onBackdropClick);
 
-
+// Закрытие модального окна по нажатии Esc 
 window.addEventListener('keydown',closeModalByEscape)
 function closeModalByEscape(event) { 
   if (event.code === 'Escape') {clearModal()
   } }
   
+//Пролистывание изображений галереи в открытом модальном окне клавишами "влево" и "вправо".
 
